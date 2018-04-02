@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WithdrawDetailMapper">
+	<resultMap id="BaseResultMap" type="com.hnair.consumer.wallet.model.WithdrawDetail">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="wallet_id" property="walletId" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+		<result column="req_time" property="reqTime" jdbcType="TIMESTAMP" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="account_name" property="accountName" jdbcType="VARCHAR" />
+		<result column="blank_name" property="blankName" jdbcType="VARCHAR" />
+		<result column="card_code" property="cardCode" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="approver_id" property="approverId" jdbcType="BIGINT" />
+		<result column="approver_name" property="approverName" jdbcType="VARCHAR" />
+		<result column="inspect_time" property="inspectTime" jdbcType="TIMESTAMP" />
+		<result column="inspect_info" property="inspectInfo" jdbcType="VARCHAR" />
+		<result column="business_no" property="businessNo" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>	
+		<if test="walletId != null"> and wallet_id= #{walletId}</if>	
+		<if test="userId != null"> and user_id= #{userId}</if>	
+		<if test="userName != null and userName !=''"> and user_name= #{userName}</if>
+		<if test="userPhone != null and userPhone !=''"> and user_phone= #{userPhone}</if>
+		<if test="reqTime != null"> and req_time= #{reqTime}</if>	
+		<if test="amount != null"> and amount= #{amount}</if>	
+		<if test="accountName != null and accountName !=''"> and account_name= #{accountName}</if>
+		<if test="blankName != null and blankName !=''"> and blank_name= #{blankName}</if>
+		<if test="cardCode != null and cardCode !=''"> and card_code= #{cardCode}</if>
+		<if test="status != null"> and status= #{status}</if>	
+		<if test="approverId != null"> and approver_id= #{approverId}</if>	
+		<if test="approverName != null and approverName !=''"> and approver_name= #{approverName}</if>
+		<if test="inspectTime != null"> and inspect_time= #{inspectTime}</if>	
+		<if test="inspectInfo != null and inspectInfo !=''"> and inspect_info= #{inspectInfo}</if>
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+		<if test="startTime != null and startTime != ''"> AND DATE_FORMAT(req_time, '%Y-%c-%e') >=  str_to_date(#{startTime,jdbcType=VARCHAR},'%Y-%c-%e')</if>
+		<if test="endTime != null and endTime != ''"> AND DATE_FORMAT(req_time, '%Y-%c-%e') <![CDATA[<=]]> str_to_date(#{endTime,jdbcType=VARCHAR},'%Y-%c-%e')</if>		
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		wallet_id ,
+		user_id ,
+		user_name ,
+		user_phone ,
+		req_time ,
+		amount ,
+		account_name ,
+		blank_name ,
+		card_code ,
+		status ,
+		approver_id ,
+		approver_name ,
+		inspect_time ,
+		inspect_info ,
+		business_no 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_detail
+		where
+		id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from withdraw_detail
+		where
+		id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.hnair.consumer.wallet.model.WithdrawDetail">
+		insert into withdraw_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>	
+			<if test="walletId != null">wallet_id,</if>	
+			<if test="userId != null">user_id,</if>	
+			<if test="userName != null and userName !=''">user_name,</if>
+			<if test="userPhone != null and userPhone !=''">user_phone,</if>
+			<if test="reqTime != null">req_time,</if>	
+			<if test="amount != null">amount,</if>	
+			<if test="accountName != null and accountName !=''">account_name,</if>
+			<if test="blankName != null and blankName !=''">blank_name,</if>
+			<if test="cardCode != null and cardCode !=''">card_code,</if>
+			<if test="status != null">status,</if>	
+			<if test="approverId != null">approver_id,</if>	
+			<if test="approverName != null and approverName !=''">approver_name,</if>
+			<if test="inspectTime != null">inspect_time,</if>	
+			<if test="inspectInfo != null and inspectInfo !=''">inspect_info,</if>
+			<if test="businessNo != null and businessNo !=''">business_no,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="walletId != null">
+				#{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null and userName !=''">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null and userPhone !=''">
+				#{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="reqTime != null">
+				#{reqTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="accountName != null and accountName !=''">
+				#{accountName,jdbcType=VARCHAR},
+			</if>
+			<if test="blankName != null and blankName !=''">
+				#{blankName,jdbcType=VARCHAR},
+			</if>
+			<if test="cardCode != null and cardCode !=''">
+				#{cardCode,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="approverId != null">
+				#{approverId,jdbcType=BIGINT},
+			</if>
+			<if test="approverName != null and approverName !=''">
+				#{approverName,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectTime != null">
+				#{inspectTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inspectInfo != null and inspectInfo !=''">
+				#{inspectInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				#{businessNo,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.hnair.consumer.wallet.model.WithdrawDetail">
+		update withdraw_detail
+		<set>
+			<if test="walletId != null">
+				wallet_id= #{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				user_id= #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="userName != null and userName !=''">
+				user_name= #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="userPhone != null and userPhone !=''">
+				user_phone= #{userPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="reqTime != null">
+				req_time= #{reqTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="amount != null">
+				amount= #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="accountName != null and accountName !=''">
+				account_name= #{accountName,jdbcType=VARCHAR},
+			</if>
+			<if test="blankName != null and blankName !=''">
+				blank_name= #{blankName,jdbcType=VARCHAR},
+			</if>
+			<if test="cardCode != null and cardCode !=''">
+				card_code= #{cardCode,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER},
+			</if>
+			<if test="approverId != null">
+				approver_id= #{approverId,jdbcType=BIGINT},
+			</if>
+			<if test="approverName != null and approverName !=''">
+				approver_name= #{approverName,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectTime != null">
+				inspect_time= #{inspectTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="inspectInfo != null and inspectInfo !=''">
+				inspect_info= #{inspectInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				business_no= #{businessNo,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from withdraw_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_detail where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="selectCheckCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from withdraw_detail where 1=1
+		<if test="startTime != null and startTime != ''"> AND DATE_FORMAT(req_time, '%Y-%c-%e') >=  str_to_date(#{startTime,jdbcType=VARCHAR},'%Y-%c-%e')</if>
+		<if test="endTime != null and endTime != ''"> AND DATE_FORMAT(req_time, '%Y-%c-%e') <![CDATA[<=]]> str_to_date(#{endTime,jdbcType=VARCHAR},'%Y-%c-%e')</if>
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+		and status in (1,2)
+	</select>
+	
+	<select id="selectCheckOver" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_detail where 1=1
+		<if test="startTime != null and startTime != ''"> AND DATE_FORMAT(req_time, '%Y-%c-%e') >=  str_to_date(#{startTime,jdbcType=VARCHAR},'%Y-%c-%e')</if>
+		<if test="endTime != null and endTime != ''"> AND DATE_FORMAT(req_time, '%Y-%c-%e') <![CDATA[<=]]> str_to_date(#{endTime,jdbcType=VARCHAR},'%Y-%c-%e')</if>
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+		and status in (1,2)
+	</select>
+</mapper>
+

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WalletBillDetailMapper">
+	<resultMap id="BaseResultMap" type="com.hnair.consumer.wallet.model.WalletBillDetail">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="wallet_id" property="walletId" jdbcType="BIGINT" />
+		<result column="task_type" property="taskType" jdbcType="INTEGER" />
+		<result column="business_no" property="businessNo" jdbcType="VARCHAR" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="balance" property="balance" jdbcType="DECIMAL" />
+		<result column="amount_type" property="amountType" jdbcType="INTEGER" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>	
+		<if test="walletId != null"> and wallet_id= #{walletId}</if>	
+		<if test="taskType != null"> and task_type= #{taskType}</if>	
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+		<if test="amount != null"> and amount= #{amount}</if>	
+		<if test="balance != null"> and balance= #{balance}</if>	
+		<if test="amountType != null"> and amount_type= #{amountType}</if>	
+		<if test="description != null and description !=''"> and description= #{description}</if>
+		<if test="createTime != null"> and create_time= #{createTime}</if>	
+		<if test="startTime != null"> and create_time<![CDATA[>=]]> #{startTime}</if>	
+		<if test="endTime != null"> and create_time<![CDATA[<=]]> #{endTime}</if>	
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		wallet_id ,
+		task_type ,
+		business_no ,
+		amount ,
+		balance ,
+		amount_type ,
+		description ,
+		create_time 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from wallet_bill_detail
+		where
+		id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from wallet_bill_detail
+		where
+		id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.hnair.consumer.wallet.model.WalletBillDetail">
+		insert into wallet_bill_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>	
+			<if test="walletId != null">wallet_id,</if>	
+			<if test="taskType != null">task_type,</if>	
+			<if test="businessNo != null and businessNo !=''">business_no,</if>
+			<if test="amount != null">amount,</if>	
+			<if test="balance != null">balance,</if>	
+			<if test="amountType != null">amount_type,</if>	
+			<if test="description != null and description !=''">description,</if>
+			<if test="createTime != null">create_time,</if>	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="walletId != null">
+				#{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="taskType != null">
+				#{taskType,jdbcType=INTEGER},
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				#{businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="balance != null">
+				#{balance,jdbcType=DECIMAL},
+			</if>
+			<if test="amountType != null">
+				#{amountType,jdbcType=INTEGER},
+			</if>
+			<if test="description != null and description !=''">
+				#{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.hnair.consumer.wallet.model.WalletBillDetail">
+		update wallet_bill_detail
+		<set>
+			<if test="walletId != null">
+				wallet_id= #{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="taskType != null">
+				task_type= #{taskType,jdbcType=INTEGER},
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				business_no= #{businessNo,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				amount= #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="balance != null">
+				balance= #{balance,jdbcType=DECIMAL},
+			</if>
+			<if test="amountType != null">
+				amount_type= #{amountType,jdbcType=INTEGER},
+			</if>
+			<if test="description != null and description !=''">
+				description= #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time= #{createTime,jdbcType=TIMESTAMP}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from wallet_bill_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from wallet_bill_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from wallet_bill_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from wallet_bill_detail where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

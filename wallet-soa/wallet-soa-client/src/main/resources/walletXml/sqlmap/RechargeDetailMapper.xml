@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RechargeDetailMapper">
+	<resultMap id="BaseResultMap" type="com.hnair.consumer.wallet.model.RechargeDetail">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="amount" property="amount" jdbcType="DECIMAL" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="applyUid" property="applyUid" jdbcType="VARCHAR" />
+		<result column="wallet_id" property="walletId" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="auditUid" property="auditUid" jdbcType="VARCHAR" />
+		<result column="req_info" property="reqInfo" jdbcType="VARCHAR" />
+		<result column="inspect_info" property="inspectInfo" jdbcType="VARCHAR" />
+		<result column="inspect_time" property="inspectTime" jdbcType="TIMESTAMP" />
+		<result column="applyUserName" property="applyUserName" jdbcType="VARCHAR" />
+		<result column="auditUserName" property="auditUserName" jdbcType="VARCHAR" />
+		<result column="applyUsePhone" property="applyUsePhone" jdbcType="VARCHAR" />
+		<result column="serialNumber" property="serialNumber" jdbcType="VARCHAR" />
+		<result column="tradingAccountName" property="tradingAccountName" jdbcType="VARCHAR" />
+		<result column="tradingAccountNumber" property="tradingAccountNumber" jdbcType="VARCHAR" />
+		<result column="business_no" property="businessNo" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="id != null"> and id= #{id}</if>	
+		<if test="amount != null"> and amount= #{amount}</if>	
+		<if test="status != null"> and status= #{status}</if>	
+		<if test="applyUid != null and applyUid !=''"> and applyUid= #{applyUid}</if>
+		<if test="walletId != null"> and wallet_id= #{walletId}</if>	
+		<if test="createTime != null"> and create_time= #{createTime}</if>	
+		<if test="modifyTime != null"> and modify_time= #{modifyTime}</if>	
+		<if test="auditUid != null and auditUid !=''"> and auditUid= #{auditUid}</if>
+		<if test="reqInfo != null and reqInfo !=''"> and req_info= #{reqInfo}</if>
+		<if test="inspectInfo != null and inspectInfo !=''"> and inspect_info= #{inspectInfo}</if>
+		<if test="inspectTime != null"> and inspect_time= #{inspectTime}</if>	
+		<if test="applyUserName != null and applyUserName !=''"> and applyUserName= #{applyUserName}</if>
+		<if test="auditUserName != null and auditUserName !=''"> and auditUserName= #{auditUserName}</if>
+		<if test="applyUsePhone != null and applyUsePhone !=''"> and applyUsePhone= #{applyUsePhone}</if>
+		<if test="serialNumber != null and serialNumber !=''"> and serialNumber= #{serialNumber}</if>
+		<if test="tradingAccountName != null and tradingAccountName !=''"> and tradingAccountName= #{tradingAccountName}</if>
+		<if test="tradingAccountNumber != null and tradingAccountNumber !=''"> and tradingAccountNumber= #{tradingAccountNumber}</if>
+		<if test="startTime != null and startTime != ''">
+			AND DATE_FORMAT(create_time, '%Y-%c-%e')  >=  str_to_date(#{startTime,jdbcType=VARCHAR},'%Y-%c-%e')
+		</if>
+		<if test="endTime != null and endTime != ''">
+			AND DATE_FORMAT(create_time, '%Y-%c-%e')  <![CDATA[<=]]> str_to_date(#{endTime,jdbcType=VARCHAR},'%Y-%c-%e')
+		</if>
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		id ,
+		amount ,
+		status ,
+		applyUid ,
+		wallet_id ,
+		create_time ,
+		modify_time ,
+		auditUid ,
+		req_info ,
+		inspect_info ,
+		inspect_time ,
+		applyUserName ,
+		auditUserName ,
+		applyUsePhone ,
+		serialNumber ,
+		tradingAccountName ,
+		tradingAccountNumber ,
+		business_no
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_detail
+		where
+		id = #{id,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from recharge_detail
+		where
+		id = #{id,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.hnair.consumer.wallet.model.RechargeDetail">
+		insert into recharge_detail
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>	
+			<if test="amount != null">amount,</if>	
+			<if test="status != null">status,</if>	
+			<if test="applyUid != null and applyUid !=''">applyUid,</if>
+			<if test="walletId != null">wallet_id,</if>	
+			<if test="createTime != null">create_time,</if>	
+			<if test="modifyTime != null">modify_time,</if>	
+			<if test="auditUid != null and auditUid !=''">auditUid,</if>
+			<if test="reqInfo != null and reqInfo !=''">req_info,</if>
+			<if test="inspectInfo != null and inspectInfo !=''">inspect_info,</if>
+			<if test="inspectTime != null">inspect_time,</if>	
+			<if test="applyUserName != null and applyUserName !=''">applyUserName,</if>
+			<if test="auditUserName != null and auditUserName !=''">auditUserName,</if>
+			<if test="applyUsePhone != null and applyUsePhone !=''">applyUsePhone,</if>
+			<if test="serialNumber != null and serialNumber !=''">serialNumber,</if>
+			<if test="tradingAccountName != null and tradingAccountName !=''">tradingAccountName,</if>
+			<if test="tradingAccountNumber != null and tradingAccountNumber !=''">tradingAccountNumber,</if>
+			<if test="businessNo != null and businessNo !=''">business_no,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="applyUid != null and applyUid !=''">
+				#{applyUid,jdbcType=VARCHAR},
+			</if>
+			<if test="walletId != null">
+				#{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditUid != null and auditUid !=''">
+				#{auditUid,jdbcType=VARCHAR},
+			</if>
+			<if test="reqInfo != null and reqInfo !=''">
+				#{reqInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectInfo != null and inspectInfo !=''">
+				#{inspectInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectTime != null">
+				#{inspectTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="applyUserName != null and applyUserName !=''">
+				#{applyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="auditUserName != null and auditUserName !=''">
+				#{auditUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="applyUsePhone != null and applyUsePhone !=''">
+				#{applyUsePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="serialNumber != null and serialNumber !=''">
+				#{serialNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingAccountName != null and tradingAccountName !=''">
+				#{tradingAccountName,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingAccountNumber != null and tradingAccountNumber !=''">
+				#{tradingAccountNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				#{businessNo,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.hnair.consumer.wallet.model.RechargeDetail">
+		update recharge_detail
+		<set>
+			<if test="amount != null">
+				amount= #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER},
+			</if>
+			<if test="applyUid != null and applyUid !=''">
+				applyUid= #{applyUid,jdbcType=VARCHAR},
+			</if>
+			<if test="walletId != null">
+				wallet_id= #{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time= #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time= #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditUid != null and auditUid !=''">
+				auditUid= #{auditUid,jdbcType=VARCHAR},
+			</if>
+			<if test="reqInfo != null and reqInfo !=''">
+				req_info= #{reqInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectInfo != null and inspectInfo !=''">
+				inspect_info= #{inspectInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectTime != null">
+				inspect_time= #{inspectTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="applyUserName != null and applyUserName !=''">
+				applyUserName= #{applyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="auditUserName != null and auditUserName !=''">
+				auditUserName= #{auditUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="applyUsePhone != null and applyUsePhone !=''">
+				applyUsePhone= #{applyUsePhone,jdbcType=VARCHAR}
+			</if>
+			<if test="serialNumber != null and serialNumber !=''">
+				serialNumber= #{serialNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingAccountName != null and tradingAccountName !=''">
+				tradingAccountName= #{tradingAccountName,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingAccountNumber != null and tradingAccountNumber !=''">
+				tradingAccountNumber= #{tradingAccountNumber,jdbcType=VARCHAR}
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				business_no= #{businessNo,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from recharge_detail where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_detail where id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_detail where 1=1
+		<include refid="Base_Where" />
+		ORDER BY
+		create_time DESC
+	</select>
+
+
+	<select id="getAudited" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from recharge_detail where 1=1 and status in (2,3)
+		<if test="startTime != null"> and create_time<![CDATA[>=]]> #{startTime}</if>
+		<if test="endTime != null"> and create_time<![CDATA[<=]]> #{endTime}</if>
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+		ORDER BY
+		create_time DESC
+	</select>
+
+	<select id="getAuditedPageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from recharge_detail where 1=1 and status in (2,3)
+		<if test="startTime != null"> and create_time<![CDATA[>=]]> #{startTime}</if>
+		<if test="endTime != null"> and create_time<![CDATA[<=]]> #{endTime}</if>
+		<if test="businessNo != null and businessNo !=''"> and business_no= #{businessNo}</if>
+	</select>
+
+	<update id="updateByPrimaryKeyUpdateTimeSelective" parameterType="map">
+		update recharge_detail
+		<set>
+			<if test="amount != null">
+				amount= #{amount,jdbcType=DECIMAL},
+			</if>
+			<if test="status != null">
+				status= #{status,jdbcType=INTEGER},
+			</if>
+			<if test="applyUid != null and applyUid !=''">
+				applyUid= #{applyUid,jdbcType=VARCHAR},
+			</if>
+			<if test="walletId != null">
+				wallet_id= #{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time= #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time= #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="auditUid != null and auditUid !=''">
+				auditUid= #{auditUid,jdbcType=VARCHAR},
+			</if>
+			<if test="reqInfo != null and reqInfo !=''">
+				req_info= #{reqInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectInfo != null and inspectInfo !=''">
+				inspect_info= #{inspectInfo,jdbcType=VARCHAR},
+			</if>
+			<if test="inspectTime != null">
+				inspect_time= #{inspectTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="applyUserName != null and applyUserName !=''">
+				applyUserName= #{applyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="auditUserName != null and auditUserName !=''">
+				auditUserName= #{auditUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="applyUsePhone != null and applyUsePhone !=''">
+				applyUsePhone= #{applyUsePhone,jdbcType=VARCHAR},
+			</if>
+			<if test="serialNumber != null and serialNumber !=''">
+				serialNumber= #{serialNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingAccountName != null and tradingAccountName !=''">
+				tradingAccountName= #{tradingAccountName,jdbcType=VARCHAR},
+			</if>
+			<if test="tradingAccountNumber != null and tradingAccountNumber !=''">
+				tradingAccountNumber= #{tradingAccountNumber,jdbcType=VARCHAR},
+			</if>
+			<if test="businessNo != null and businessNo !=''">
+				business_no= #{businessNo,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		id = #{id,jdbcType=BIGINT}  and <![CDATA[modify_time = #{oldModifyTime,jdbcType=TIMESTAMP}]]>
+	</update>
+
+</mapper>

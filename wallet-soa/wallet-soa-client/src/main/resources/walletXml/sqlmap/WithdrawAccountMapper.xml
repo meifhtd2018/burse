@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="WithdrawAccountMapper">
+	<resultMap id="BaseResultMap" type="com.hnair.consumer.wallet.model.WithdrawAccount">
+		<id column="withdraw_account_id" property="withdrawAccountId" jdbcType="BIGINT" />
+		<result column="wallet_id" property="walletId" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="account" property="account" jdbcType="VARCHAR" />
+		<result column="account_name" property="accountName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="withdrawAccountId != null"> and withdraw_account_id= #{withdrawAccountId}</if>	
+		<if test="walletId != null"> and wallet_id= #{walletId}</if>	
+		<if test="type != null"> and type= #{type}</if>	
+		<if test="account != null and account !=''"> and account= #{account}</if>
+		<if test="accountName != null and accountName !=''"> and account_name= #{accountName}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		withdraw_account_id ,
+		wallet_id ,
+		type ,
+		account ,
+		account_name 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_account
+		where
+		withdraw_account_id = #{withdrawAccountId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from withdraw_account
+		where
+		withdraw_account_id = #{withdrawAccountId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.hnair.consumer.wallet.model.WithdrawAccount">
+		insert into withdraw_account
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="withdrawAccountId != null">withdraw_account_id,</if>	
+			<if test="walletId != null">wallet_id,</if>	
+			<if test="type != null">type,</if>	
+			<if test="account != null and account !=''">account,</if>
+			<if test="accountName != null and accountName !=''">account_name,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="withdrawAccountId != null">
+				#{withdrawAccountId,jdbcType=BIGINT},
+			</if>
+			<if test="walletId != null">
+				#{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=INTEGER},
+			</if>
+			<if test="account != null and account !=''">
+				#{account,jdbcType=VARCHAR},
+			</if>
+			<if test="accountName != null and accountName !=''">
+				#{accountName,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.hnair.consumer.wallet.model.WithdrawAccount">
+		update withdraw_account
+		<set>
+			<if test="walletId != null">
+				wallet_id= #{walletId,jdbcType=BIGINT},
+			</if>
+			<if test="type != null">
+				type= #{type,jdbcType=INTEGER},
+			</if>
+			<if test="account != null and account !=''">
+				account= #{account,jdbcType=VARCHAR},
+			</if>
+			<if test="accountName != null and accountName !=''">
+				account_name= #{accountName,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		withdraw_account_id = #{withdrawAccountId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_account where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from withdraw_account where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_account where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from withdraw_account where withdraw_account_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>

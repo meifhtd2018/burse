@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MerchantMapper">
+	<resultMap id="BaseResultMap" type="com.hnair.consumer.wallet.model.Merchant">
+		<id column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+		<result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+		<result column="domain_name" property="domainName" jdbcType="VARCHAR" />
+		<result column="contact_person" property="contactPerson" jdbcType="VARCHAR" />
+		<result column="contact_type" property="contactType" jdbcType="VARCHAR" />
+		<result column="contact_address" property="contactAddress" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="payee_account" property="payeeAccount" jdbcType="BIGINT" />
+		<result column="app_secret" property="appSecret" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Where">
+		<if test="merchantId != null"> and merchant_id= #{merchantId}</if>	
+		<if test="merchantName != null and merchantName !=''"> and merchant_name= #{merchantName}</if>
+		<if test="domainName != null and domainName !=''"> and domain_name= #{domainName}</if>
+		<if test="contactPerson != null and contactPerson !=''"> and contact_person= #{contactPerson}</if>
+		<if test="contactType != null and contactType !=''"> and contact_type= #{contactType}</if>
+		<if test="contactAddress != null and contactAddress !=''"> and contact_address= #{contactAddress}</if>
+		<if test="createTime != null"> and create_time= #{createTime}</if>	
+		<if test="modifyTime != null"> and modify_time= #{modifyTime}</if>	
+		<if test="payeeAccount != null"> and payee_account= #{payeeAccount}</if>	
+		<if test="appSecret != null and appSecret !=''"> and app_secret= #{appSecret}</if>
+	</sql>
+	<sql id="Base_Column_List">
+		merchant_id ,
+		merchant_name ,
+		domain_name ,
+		contact_person ,
+		contact_type ,
+		contact_address ,
+		create_time ,
+		modify_time ,
+		payee_account ,
+		app_secret 
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from merchant
+		where
+		merchant_id = #{merchantId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from merchant
+		where
+		merchant_id = #{merchantId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insertSelective" parameterType="com.hnair.consumer.wallet.model.Merchant">
+		insert into merchant
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="merchantId != null">merchant_id,</if>	
+			<if test="merchantName != null and merchantName !=''">merchant_name,</if>
+			<if test="domainName != null and domainName !=''">domain_name,</if>
+			<if test="contactPerson != null and contactPerson !=''">contact_person,</if>
+			<if test="contactType != null and contactType !=''">contact_type,</if>
+			<if test="contactAddress != null and contactAddress !=''">contact_address,</if>
+			<if test="createTime != null">create_time,</if>	
+			<if test="modifyTime != null">modify_time,</if>	
+			<if test="payeeAccount != null">payee_account,</if>	
+			<if test="appSecret != null and appSecret !=''">app_secret,</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="merchantId != null">
+				#{merchantId,jdbcType=BIGINT},
+			</if>
+			<if test="merchantName != null and merchantName !=''">
+				#{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="domainName != null and domainName !=''">
+				#{domainName,jdbcType=VARCHAR},
+			</if>
+			<if test="contactPerson != null and contactPerson !=''">
+				#{contactPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="contactType != null and contactType !=''">
+				#{contactType,jdbcType=VARCHAR},
+			</if>
+			<if test="contactAddress != null and contactAddress !=''">
+				#{contactAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payeeAccount != null">
+				#{payeeAccount,jdbcType=BIGINT},
+			</if>
+			<if test="appSecret != null and appSecret !=''">
+				#{appSecret,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.hnair.consumer.wallet.model.Merchant">
+		update merchant
+		<set>
+			<if test="merchantName != null and merchantName !=''">
+				merchant_name= #{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="domainName != null and domainName !=''">
+				domain_name= #{domainName,jdbcType=VARCHAR},
+			</if>
+			<if test="contactPerson != null and contactPerson !=''">
+				contact_person= #{contactPerson,jdbcType=VARCHAR},
+			</if>
+			<if test="contactType != null and contactType !=''">
+				contact_type= #{contactType,jdbcType=VARCHAR},
+			</if>
+			<if test="contactAddress != null and contactAddress !=''">
+				contact_address= #{contactAddress,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time= #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyTime != null">
+				modify_time= #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="payeeAccount != null">
+				payee_account= #{payeeAccount,jdbcType=BIGINT},
+			</if>
+			<if test="appSecret != null and appSecret !=''">
+				app_secret= #{appSecret,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where
+		merchant_id = #{merchantId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getAll" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from merchant where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageCount" resultType="java.lang.Integer" parameterType="map">
+		select count(1) from merchant where 1=1
+		<include refid="Base_Where" />
+	</select>
+	<select id="pageData" resultMap="BaseResultMap" parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from merchant where 1=1
+		<include refid="Base_Where" />
+	</select>
+
+	<select id="selectByIds" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from merchant where merchant_id in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+
+</mapper>
